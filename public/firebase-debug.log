@@ -1,0 +1,41 @@
+[debug] [2018-05-10T14:06:24.789Z] ----------------------------------------------------------------------
+[debug] [2018-05-10T14:06:24.807Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Timur.DESKTOP-GP3CQBC\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-05-10T14:06:24.808Z] CLI Version:   3.18.4
+[debug] [2018-05-10T14:06:24.808Z] Platform:      win32
+[debug] [2018-05-10T14:06:24.808Z] Node Version:  v8.11.1
+[debug] [2018-05-10T14:06:24.816Z] Time:          Thu May 10 2018 17:06:24 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:24.816Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-10T14:06:24.900Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-10T14:06:24.900Z] > authorizing via signed-in user
+[debug] [2018-05-10T14:06:24.903Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-05-10T14:06:24.903Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/X61iXQryMix-Fu5owbFWgQDp6qeiXPK1QD_8lXw2yWE',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu May 10 2018 17:06:24 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:25.369Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-10T14:06:25.443Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/todolist-bb9f7  
+  
+ Thu May 10 2018 17:06:25 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:26.269Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-10T14:06:26.270Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/todolist-bb9f7/tokens  
+  
+ Thu May 10 2018 17:06:26 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:26.967Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-10T14:06:26.968Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/todolist-bb9f7  
+  
+ Thu May 10 2018 17:06:26 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:27.885Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\Timur.DESKTOP-GP3CQBC\Desktop\Team9_2\Team9_2'...
+[info] 
+[debug] [2018-05-10T14:06:27.890Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/373731737377/clients/_:getWebAppConfig  
+  
+ Thu May 10 2018 17:06:27 GMT+0300 (GTB Daylight Time)
+[debug] [2018-05-10T14:06:28.986Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+
