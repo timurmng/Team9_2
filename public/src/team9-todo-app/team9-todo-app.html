@@ -1,4 +1,9 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 
 <dom-module id="team9-todo-app">
   <template>
@@ -7,9 +12,28 @@
         display: block;
       }
     </style>
+    <firebase-app
+      auth-domain="todolist-bb9f7.firebaseapp.com"
+      database-url="https://todolist-bb9f7.firebaseio.com"
+      api-key="AIzaSyAC5FzwEm2ATl4pRzOtLKnyPS24UbXEhuY"
+      storage-bucket="todolist-bb9f7.appspot.com"
+      messaging-sender-id="373731737377">
+    </firebase-app>
 
-    
     <h2>Hello [[prop1]]!</h2>
+
+    <firebase-auth user="{{myUser}}"></firebase-auth>
+
+    {{myUser.uid}}
+
+    <button on-tap="btnClick">TEXT</button>
+    <input type="text" id="mail"/>
+    <firebase-query path="todos" data="{{todos}}"></firebase-query>
+
+    <template is="dom-repeat" items="[[todos]]">
+        [[item.title]]
+        [[item.$key]]
+    </template>
   </template>
 
   <script>
@@ -17,8 +41,16 @@
      * @customElement
      * @polymer
      */
-    class Team9TodoApp extends Polymer.Element {
+    class Team9TodoApp extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() { return 'team9-todo-app'; }
+
+      btnClick(){
+
+          console.log(this.$.mail.value)
+          // firebase.auth().createUserWithEmailAndPassword("t@t.com", "parola")
+          firebase.auth().signInWithEmailAndPassword(this.$.mail.value, "parola")
+      }
+
       static get properties() {
         return {
           prop1: {
