@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="team9-todo-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Team9TodoApp extends Polymer.Element {
+      static get is() { return 'team9-todo-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'team9-todo-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(Team9TodoApp.is, Team9TodoApp);
+  </script>
+</dom-module>
