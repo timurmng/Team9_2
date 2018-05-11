@@ -5,13 +5,101 @@
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 
+
+
+
 <dom-module id="team9-todo-app">
   <template>
     <style>
-      :host {
-        display: block;
+
+      :host{
+        /*background-color: lightblue;*/
+        color:darkblue;
+        /*border: 2px solid darkblue;*/
+        padding: 25px;
+        margin: 50px;
       }
+
+      input[type=text] {
+        width: 130px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+      }
+
+      input[type=text]:focus {
+        width: 100%;
+      }
+
+      .meter {
+        height: 20px;
+        position: relative;
+        background: #555;
+        -moz-border-radius: 25px;
+        -webkit-border-radius: 25px;
+        border-radius: 25px;
+        padding: 10px;
+        -webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+        -moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+        box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+      }
+
+      #items{ background-color: lightblue;
+        color: darkblue;
+        border: 2px solid darkblue;
+        padding: 10px;
+        margin: 30px;
+        align-content: center;
+      }
+
+      #buttons{ background-color: lightblue;
+        color: darkblue;
+        border: 2px solid darkblue;
+        padding: 10px;
+        margin: 30px;
+      }
+
+      .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 60px;
+        transition: 0.5s;
+      }
+
+      .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidenav a:hover {
+        color: burlywood;
+      }
+
+      .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      #main {
+        transition: margin-left .5s;
+        padding: 20px;
+      }
+
+
     </style>
+
     <firebase-app
       auth-domain="todolist-bb9f7.firebaseapp.com"
       database-url="https://todolist-bb9f7.firebaseio.com"
@@ -20,23 +108,140 @@
       messaging-sender-id="373731737377">
     </firebase-app>
 
-    <h2>Hello [[prop1]]!</h2>
+    <div class="showToDos" id="showToDos">
 
-    <firebase-auth user="{{myUser}}"></firebase-auth>
+      <div id="sidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Create new list</a>
+        <a href="#">My lists</a>
+      </div>
 
-    {{myUser.uid}}
+      <div id="main">
+        <button class="closebtn" onclick="closeNav()">Close</button>
+      </div>
 
-    <button on-tap="btnClick">TEXT</button>
-    <input type="text" id="mail"/>
-    <firebase-query path="todos" data="{{todos}}"></firebase-query>
+      <span onclick="openNav()">Open</span>
 
-    <template is="dom-repeat" items="[[todos]]">
-        [[item.title]]
-        [[item.$key]]
-    </template>
+      <div class="meter">
+        <span style="width: 33%"></span>
+      </div>
+
+
+      <div id="progressbar">
+        <div></div>
+      </div>
+
+    <div id="buttons">
+    <title><i class="icon-user icon-black"></i>To Do List</title>
+    <title><img src="assests/img/user-Hermosillo.png" ></img>To Do List<</title>
+    <h2>To Do List </h2>
+
+    <button on-tap="addItem">Add item</button>
+    <button on-tap="removeItem">Remove item</button>
+
+    <input type="text" name="search" placeholder="Search item..">
+    <button on-tap="searchItem">Enter</button>
+    </div>
+
+<div id="items">
+    <ol>
+      <li><input type="text" id="item1" name="item1"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item2" name="item2"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item3" name="item3"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item4" name="item4"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item5" name="item5"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item6" name="item6"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item7" name="item7"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item8" name="item8"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item9" name="item9"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+      <li><input type="text" id="item10" name="item10"/><input type="checkbox" unresolved/>
+        <button on-tap="comment">Comment</button></li>
+    </ol>
+</div>
+
+
+
+    <!--<firebase-auth user="{{myUser}}"></firebase-auth>-->
+
+    <!--{{myUser.uid}}-->
+
+    <!--<button on-tap="btnClick">Register</button>-->
+    <!--<input type="text" id="mail" name="e-mail"/>-->
+    <!--<firebase-query path="todos" data="{{todos}}"></firebase-query>-->
+
+    <!--<template is="dom-repeat" items="[[todos]]">-->
+        <!--[[item.title]]-->
+        <!--[[item.$key]]-->
+    <!--</template>-->
+
   </template>
 
+
+
   <script>
+
+      function openNav() {
+          document.getElementById("sidenav").style.width = "250px";
+          document.getElementById("sidenav").style.display="inline";
+      }
+
+      function closeNav() {
+          document.getElementById("sidenav").style.width = "0";
+      }
+
+      function openNav() {
+          document.getElementById("sidenav").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+          document.getElementById("sidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft = "0";
+      }
+
+
+
+
+      const siteUrl='team9-todo-app/listItem';
+
+      function createListItem() {
+
+          const clientContext = new SP.ClientContext(siteUrl);
+          const oList = clientContext.get_web().get_lists().getByTitle('rhr');
+
+          const itemCreateInfo = new SP.ListItemCreationInformation();
+          this.oListItem = oList.addItem(itemCreateInfo);
+
+          oListItem.set_item('Title', 'My New Item!');
+          oListItem.set_item('Body', 'Hello World!');
+
+          oListItem.update();
+
+          clientContext.load(oListItem);
+
+          clientContext.executeQueryAsync(Function.createDelegate(this, this.onQuerySucceeded), Function.createDelegate(this, this.onQueryFailed));
+      }
+
+      function onQuerySucceeded() {
+
+          alert('Item created: ' + oListItem.get_id());
+      }
+
+      function onQueryFailed(sender, args) {
+
+          alert('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+      }
+
+
     /**
      * @customElement
      * @polymer
@@ -44,23 +249,24 @@
     class Team9TodoApp extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() { return 'team9-todo-app'; }
 
-      btnClick(){
-
-          console.log(this.$.mail.value)
-          // firebase.auth().createUserWithEmailAndPassword("t@t.com", "parola")
-          firebase.auth().signInWithEmailAndPassword(this.$.mail.value, "parola")
-      }
-
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'team9-todo-app'
-          }
-        };
-      }
+      // btnClick(){
+      //
+      //     console.log(this.$.mail.value)
+      //     // firebase.auth().createUserWithEmailAndPassword("t@t.com", "parola")
+      //     firebase.auth().signInWithEmailAndPassword(this.$.mail.value, "parola")
+      // }
+      //
+      // static get properties() {
+      //   return {
+      //     prop1: {
+      //       type: String,
+      //       value: 'team9-todo-app'
+      //     }
+      //   };
+      // }
     }
 
     window.customElements.define(Team9TodoApp.is, Team9TodoApp);
   </script>
 </dom-module>
+</div>
