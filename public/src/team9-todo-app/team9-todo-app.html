@@ -10,6 +10,7 @@
 
 <dom-module id="team9-todo-app">
   <template>
+
     <style>
 
       :host{
@@ -80,6 +81,14 @@
         transition: 0.3s;
       }
 
+      #login{
+        display:none;
+      }
+
+      #login[is-shown]{
+        display:block;
+      }
+
       .sidenav a:hover {
         color: burlywood;
       }
@@ -108,8 +117,17 @@
       messaging-sender-id="373731737377">
     </firebase-app>
 
+    <h2>Hello {{myUser.uid}}</h2>
     <div class="showToDos" id="showToDos">
 
+    <div id="login" is-shown$="[[showLogin]]">
+    <firebase-auth user="{{myUser}}" on-user-changed="user_changed"></firebase-auth>
+        <br>First Name: <input type="text" id="firstname"/><br>
+        Last Name: <input type="text" id="lastname"/><br>
+        E-mail: <input type="text" id="email"><br>
+        Password:<input type="password" id="pwd"><br>
+        <button on-tap="btnClick">Register</button>
+    </div>
       <div id="sidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="#">Create new list</a>
@@ -122,6 +140,12 @@
       </div>
 
 
+<!--<firebase-query path="todos" data="{{todos}}"></firebase-query>
+
+    <template is="dom-repeat" items="[[todos]]">
+        [[item.title]]
+        [[item.$key]]
+    </template> -->
 
       <div class="meter">
         <span style="width: 33%"></span>
@@ -249,7 +273,70 @@
      */
     class Team9TodoApp extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() { return 'team9-todo-app'; }
+      constructor(){
+          super();
+          this.showLogin = true;
+      }
 
+
+      update(uid){
+
+            firebase.database().ref("users/" + uid).update({
+            	todolists : {
+            		list1 : {
+            			name: "TEST3",
+            			item: {
+            				first_item : {
+            					due_time: "123123123123",
+            					is_checked: "true",
+            					name: "FUCK IT",
+            					priority: "MAXIMUM"
+            				}
+            			}
+            		}
+            	}
+            })
+
+            console.log("asd");
+       }
+
+      btnClick(){
+          var auxUid;
+          firebase.auth().createUserWithEmailAndPassword(this.$.email.value, this.$.pwd.value).then((user)=>{
+                auxUid = user.uid;
+                firebase.database().ref("users/" + user.uid).set({
+                  email : user.email,
+                  firstname : this.$.firstname.value,
+                  lastname : this.$.lastname.value,
+                }).then((user)=>{
+                    this.update(auxUid)
+                })
+          }).catch((e)=>{
+            console.log(e)
+              alert("A aparut o eroare la inregistrare")
+          })
+}
+
+      user_changed(user){
+        //  console.log(user)
+          if(user.value == null){
+              this.showLogin = true
+          } else {
+              this.showLogin = false
+          }
+
+      }
+
+
+
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'team9-todo-app'
+          }
+        };
+      }
       // btnClick(){
       //
       //     console.log(this.$.mail.value)
